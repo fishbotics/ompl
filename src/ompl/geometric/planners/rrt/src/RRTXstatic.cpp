@@ -36,7 +36,6 @@
 
 #include "ompl/geometric/planners/rrt/RRTXstatic.h"
 #include <algorithm>
-#include <boost/math/constants/constants.hpp>
 #include <limits>
 #include "ompl/base/Goal.h"
 #include "ompl/base/goals/GoalSampleableRegion.h"
@@ -782,7 +781,7 @@ void ompl::geometric::RRTXstatic::calculateRewiringLowerBounds()
     auto dimDbl = static_cast<double>(si_->getStateDimension());
 
     // k_rrt > 2^(d + 1) * e * (1 + 1 / d).  K-nearest RRT*
-    k_rrt_ = rewireFactor_ * (std::pow(2, dimDbl + 1) * boost::math::constants::e<double>() * (1.0 + 1.0 / dimDbl));
+    k_rrt_ = rewireFactor_ * (std::pow(2, dimDbl + 1) * expl(1) * (1.0 + 1.0 / dimDbl));
 
     // r_rrt > (2*(1+1/d))^(1/d)*(measure/ballvolume)^(1/d)
     r_rrt_ = rewireFactor_ *

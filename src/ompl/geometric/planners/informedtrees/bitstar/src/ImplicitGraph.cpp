@@ -37,15 +37,13 @@
 // My definition:
 #include "ompl/geometric/planners/informedtrees/bitstar/ImplicitGraph.h"
 
-// STL/Boost:
+// STL:
 // For std::move
 #include <utility>
 // For smart pointers
 #include <memory>
 // For, you know, math
 #include <cmath>
-// For boost math constants
-#include <boost/math/constants/constants.hpp>
 
 // OMPL:
 // For OMPL_INFORM et al.
@@ -1411,8 +1409,8 @@ namespace ompl
             auto stateDimension = static_cast<double>(spaceInformation_->getStateDimension());
 
             // Calculate the term and return.
-            return boost::math::constants::e<double>() +
-                   (boost::math::constants::e<double>() / stateDimension);  // RRG k-nearest
+            return expl(1) +
+                   (expl(1) / stateDimension);  // RRG k-nearest
         }
 
         void BITstar::ImplicitGraph::assertSetup() const

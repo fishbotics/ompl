@@ -38,10 +38,10 @@
 #include "ompl/base/samplers/UniformValidStateSampler.h"
 #include "ompl/base/OptimizationObjective.h"
 #include "ompl/base/ScopedState.h"
+#include "ompl/util/Math.h"
 #include <algorithm>
 #include <cmath>
 #include <limits>
-#include <boost/math/constants/constants.hpp>
 
 ompl::geometric::PathGeometric::PathGeometric(const PathGeometric &path) : base::Path(path.si_)
 {
@@ -144,7 +144,7 @@ double ompl::geometric::PathGeometric::smoothness() const
             if (acosValue > -1.0 && acosValue < 1.0)
             {
                 // the smoothness is actually the outside angle of the one we compute
-                double angle = (boost::math::constants::pi<double>() - acos(acosValue));
+                double angle = (ompl::pi() - acos(acosValue));
 
                 // and we normalize by the length of the segments
                 double k = 2.0 * angle / (a + b);

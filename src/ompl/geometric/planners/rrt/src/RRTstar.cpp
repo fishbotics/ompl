@@ -36,7 +36,6 @@
 
 #include "ompl/geometric/planners/rrt/RRTstar.h"
 #include <algorithm>
-#include <boost/math/constants/constants.hpp>
 #include <limits>
 #include <vector>
 #include "ompl/base/Goal.h"
@@ -1149,7 +1148,7 @@ void ompl::geometric::RRTstar::calculateRewiringLowerBounds()
     const auto dimDbl = static_cast<double>(si_->getStateDimension());
 
     // k_rrt > 2^(d + 1) * e * (1 + 1 / d).  K-nearest RRT*
-    k_rrt_ = rewireFactor_ * (std::pow(2, dimDbl + 1) * boost::math::constants::e<double>() * (1.0 + 1.0 / dimDbl));
+    k_rrt_ = rewireFactor_ * (std::pow(2, dimDbl + 1) * expl(1) * (1.0 + 1.0 / dimDbl));
 
     // r_rrt > (2*(1+1/d))^(1/d)*(measure/ballvolume)^(1/d)
     // If we're not using the informed measure, prunedMeasure_ will be set to si_->getSpaceMeasure();

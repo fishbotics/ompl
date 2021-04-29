@@ -53,6 +53,7 @@ else(MSVC)
     add_library(ompl SHARED ${OMPL_SOURCE_CODE})
 endif(MSVC)
 target_link_libraries(ompl
+    stdc++fs
     ${OMPL_LINK_LIBRARIES}
     ${Boost_SERIALIZATION_LIBRARY}
     ${Boost_FILESYSTEM_LIBRARY}

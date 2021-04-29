@@ -38,7 +38,7 @@
 #define OMPL_TOOLS_DEBUG_PLANNER_MONITOR_
 
 #include <iostream>
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include <thread>
 #include <utility>
 
@@ -87,7 +87,7 @@ namespace ompl
             std::ostream &out_;
             double period_;
             bool shouldMonitor_;
-            boost::scoped_ptr<std::thread> monitorThread_;
+            std::unique_ptr<std::thread> monitorThread_;
         };
     }
 }

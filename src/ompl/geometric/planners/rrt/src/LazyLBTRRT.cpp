@@ -37,8 +37,6 @@
 #include "ompl/geometric/planners/rrt/LazyLBTRRT.h"
 #include "ompl/tools/config/SelfConfig.h"
 #include <limits>
-#include <boost/foreach.hpp>
-#include <boost/math/constants/constants.hpp>
 
 namespace
 {
@@ -162,8 +160,8 @@ ompl::base::PlannerStatus ompl::geometric::LazyLBTRRT::solve(const base::Planner
     LPAstarApx_ = new LPAstarApx(goalMotion_->id_, startMotion_->id_, graphApx_, costEstimatorApx);  // rooted at target
     double approxdif = std::numeric_limits<double>::infinity();
     // e+e/d.  K-nearest RRT*
-    double k_rrg = boost::math::constants::e<double>() +
-                   boost::math::constants::e<double>() / (double)si_->getStateSpace()->getDimension();
+    double k_rrg = expl(1) +
+                   expl(1) / (double)si_->getStateSpace()->getDimension();
 
     ////////////////////////////////////////////
     // step (1) - RRT
@@ -181,12 +179,14 @@ ompl::base::PlannerStatus ompl::geometric::LazyLBTRRT::solve(const base::Planner
         int k = getK(idToMotionMap_.size(), k_rrg);
         std::vector<Motion *> nnVec;
         nnVec.reserve(k);
-        BOOST_FOREACH (Motion *motion, idToMotionMap_)
+        for (auto& motion : idToMotionMap_)
         {
             nn_->nearestK(motion, k, nnVec);
-            BOOST_FOREACH (Motion *neighbor, nnVec)
-                if (neighbor->id_ != motion->id_ && !edgeExistsLb(motion, neighbor))
+            for (auto& neighbor nnVec) {
+                if (neighbor->id_ != motion->id_ && !edgeExistsLb(motion, neighbor)) {
                     addEdgeLb(motion, neighbor, distanceFunction(motion, neighbor));
+                }
+            }
         }
         idToMotionMap_.pop_back();
         closeBounds(ptc);
@@ -215,9 +215,11 @@ ompl::base::PlannerStatus ompl::geometric::LazyLBTRRT::solve(const base::Planner
             nnVec.reserve(k);
             nn_->nearestK(motion, k, nnVec);
 
-            BOOST_FOREACH (Motion *neighbor, nnVec)
-                if (neighbor->id_ != motion->id_ && !edgeExistsLb(motion, neighbor))
+            for (auto& neighbor : nnVec) {
+                if (neighbor->id_ != motion->id_ && !edgeExistsLb(motion, neighbor)) {
                     addEdgeLb(motion, neighbor, distanceFunction(motion, neighbor));
+                }
+            }
 
             closeBounds(ptc);
         }

@@ -41,7 +41,6 @@
 #include <type_traits>
 #include <utility>
 #include <vector>
-#include <boost/functional/hash.hpp>
 
 namespace ompl
 {
@@ -77,7 +76,9 @@ namespace std
         result_type operator()(argument_type const &v) const
         {
             result_type h = 0;
-            boost::hash_range(h, v.begin(), v.end());
+            for (auto& e : v) {
+              ompl::hash_combine(h, e);
+            }
             return h;
         }
     };

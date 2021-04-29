@@ -40,7 +40,6 @@
 #include "ompl/datastructures/NearestNeighbors.h"
 #include <functional>
 #include <memory>
-#include <boost/math/constants/constants.hpp>
 #include <algorithm>
 #include <utility>
 #include <vector>
@@ -138,7 +137,7 @@ namespace ompl
                           const unsigned int d = 1)
               : KStrategy<Milestone>(n(), nn)
               , n_(n)
-              , kPRMConstant_(boost::math::constants::e<double>() + (boost::math::constants::e<double>() / (double)d))
+              , kPRMConstant_(std::expl(1) + (std::expl(1) / (double)d))
             {
             }
 

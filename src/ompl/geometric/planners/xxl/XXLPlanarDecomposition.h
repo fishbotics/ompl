@@ -37,9 +37,9 @@
 #ifndef OMPL_GEOMETRIC_PLANNERS_XXL_XXLPLANARDECOMPOSITION_
 #define OMPL_GEOMETRIC_PLANNERS_XXL_XXLPLANARDECOMPOSITION_
 
-#include <boost/math/constants/constants.hpp>
 #include "ompl/geometric/planners/xxl/XXLDecomposition.h"
 #include "ompl/util/RandomNumbers.h"
+#include "ompl/util/Math.h"
 
 namespace ompl
 {
@@ -130,8 +130,8 @@ namespace ompl
             // The bounds on the Euclidean part of the decomposition
             base::RealVectorBounds xyBounds_;
             // The bounds on the orientation part of the decomposition
-            double thetaLow_{-boost::math::constants::pi<double>()};
-            double thetaHigh_{boost::math::constants::pi<double>()};
+            double thetaLow_{-ompl::pi()};
+            double thetaHigh_{pi()};
 
             // The number of splits in the X and Y dimensions
             std::vector<int> xySlices_;

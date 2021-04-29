@@ -39,7 +39,7 @@
 #include "ompl/util/Time.h"
 #include "ompl/config.h"
 #include "ompl/util/String.h"
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -127,7 +127,7 @@ namespace ompl
                     // always gets taken before planner even starts;
                     // might be worth adding a short wait time before
                     // collector begins sampling
-                    boost::scoped_ptr<std::thread> t;
+                    std::unique_ptr<std::thread> t;
                     if (planner->getPlannerProgressProperties().size() > 0)
                         t.reset(new std::thread([this, &planner, timeBetweenUpdates]
                                                 {
@@ -424,7 +424,7 @@ void ompl::tools::Benchmark::benchmark(const Request &req)
 
     OMPL_INFORM("Beginning benchmark");
     msg::OutputHandler *oh = msg::getOutputHandler();
-    boost::scoped_ptr<msg::OutputHandlerFile> ohf;
+    std::unique_ptr<msg::OutputHandlerFile> ohf;
     if (req.saveConsoleOutput)
     {
         ohf.reset(new msg::OutputHandlerFile(getConsoleFilename(exp_).c_str()));
@@ -434,7 +434,7 @@ void ompl::tools::Benchmark::benchmark(const Request &req)
         msg::noOutputHandler();
     OMPL_INFORM("Beginning benchmark");
 
-    boost::scoped_ptr<ompl::time::ProgressDisplay> progress;
+    std::unique_ptr<ompl::time::ProgressDisplay> progress;
     if (req.displayProgress)
     {
         std::cout << "Running experiment " << exp_.name << "." << std::endl;

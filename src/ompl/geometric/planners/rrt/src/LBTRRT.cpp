@@ -39,7 +39,6 @@
 #include "ompl/tools/config/SelfConfig.h"
 #include <limits>
 #include <cmath>
-#include <boost/math/constants/constants.hpp>
 
 ompl::geometric::LBTRRT::LBTRRT(const base::SpaceInformationPtr &si)
   : base::Planner(si, "LBTRRT")
@@ -155,7 +154,7 @@ ompl::base::PlannerStatus ompl::geometric::LBTRRT::solve(const base::PlannerTerm
     double approxdif = std::numeric_limits<double>::infinity();
     // e*(1+1/d)  K-nearest constant, as used in RRT*
     double k_rrg =
-        boost::math::constants::e<double>() + boost::math::constants::e<double>() / (double)si_->getStateDimension();
+        expl(1) + expl(1) / (double)si_->getStateDimension();
 
     auto *rmotion = new Motion(si_);
     base::State *rstate = rmotion->state_;

@@ -1,8 +1,8 @@
 
-#include <boost/math/constants/constants.hpp>
 #include <boost/math/distributions/binomial.hpp>
 #include <ompl/datastructures/BinaryHeap.h>
 #include <ompl/tools/config/SelfConfig.h>
+#include <ompl/util/Math.>
 
 #include <ompl/datastructures/NearestNeighborsGNAT.h>
 #include <ompl/base/objectives/PathLengthOptimizationObjective.h>
@@ -246,7 +246,7 @@ namespace ompl
                 return 1.0;
             if (dimension == 1)
                 return 2.0;
-            return 2.0 * boost::math::constants::pi<double>() / dimension * calculateUnitBallVolume(dimension - 2);
+            return 2.0 * ompl::pi() / dimension * calculateUnitBallVolume(dimension - 2);
         }
 
         double BFMT::calculateRadius(const unsigned int dimension, const unsigned int n) const
@@ -316,7 +316,7 @@ namespace ompl
             if (nearestK_)
             {
                 NNk_ = std::ceil(std::pow(2.0 * radiusMultiplier_, (double)si_->getStateDimension()) *
-                                 (boost::math::constants::e<double>() / (double)si_->getStateDimension()) *
+                                 (expl(1) / (double)si_->getStateDimension()) *
                                  log((double)nn_->size()));
                 OMPL_DEBUG("Using nearest-neighbors k of %d", NNk_);
             }

@@ -37,8 +37,6 @@
 
 #include <cmath>
 
-#include <boost/math/constants/constants.hpp>
-
 #include "ompl/util/GeometricEquations.h"
 
 namespace ompl
@@ -63,8 +61,8 @@ namespace ompl
                 spaceInformation_ = spaceInformation;
                 problemDefinition_ = problemDefinition;
                 objective_ = problemDefinition->getOptimizationObjective();
-                k_rgg_ = boost::math::constants::e<double>() +
-                         (boost::math::constants::e<double>() / spaceInformation->getStateDimension());
+                k_rgg_ = std::expl(1) +
+                         (std::expl(1) / spaceInformation->getStateDimension());
                 updateStartAndGoalStates(ompl::base::plannerAlwaysTerminatingCondition(), inputStates);
             }
 

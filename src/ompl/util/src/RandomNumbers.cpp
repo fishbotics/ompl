@@ -37,10 +37,10 @@
 #include "ompl/util/RandomNumbers.h"
 #include "ompl/util/Exception.h"
 #include "ompl/util/Console.h"
+#include "ompl/util/Math.h"
 #include <mutex>
 #include <memory>
 #include <boost/math/constants/constants.hpp>
-#include <boost/scoped_ptr.hpp>
 #include <boost/random/uniform_on_sphere.hpp>
 #include <boost/random/variate_generator.hpp>
 
@@ -113,7 +113,7 @@ namespace
     };
 
     std::once_flag g_once;
-    boost::scoped_ptr<RNGSeedGenerator> g_RNGSeedGenerator;
+    std::unique_ptr<RNGSeedGenerator> g_RNGSeedGenerator;
 
     void initRNGSeedGenerator()
     {
@@ -266,8 +266,8 @@ void ompl::RNG::quaternion(double value[4])
 {
     double x0 = uniDist_(generator_);
     double r1 = sqrt(1.0 - x0), r2 = sqrt(x0);
-    double t1 = 2.0 * boost::math::constants::pi<double>() * uniDist_(generator_),
-           t2 = 2.0 * boost::math::constants::pi<double>() * uniDist_(generator_);
+    double t1 = 2.0 * ompl::pi() * uniDist_(generator_),
+           t2 = 2.0 * ompl::pi() * uniDist_(generator_);
     double c1 = cos(t1), s1 = sin(t1);
     double c2 = cos(t2), s2 = sin(t2);
     value[0] = s1 * r1;
@@ -279,9 +279,9 @@ void ompl::RNG::quaternion(double value[4])
 // From Effective Sampling and Distance Metrics for 3D Rigid Body Path Planning, by James Kuffner, ICRA 2004
 void ompl::RNG::eulerRPY(double value[3])
 {
-    value[0] = boost::math::constants::pi<double>() * (-2.0 * uniDist_(generator_) + 1.0);
-    value[1] = acos(1.0 - 2.0 * uniDist_(generator_)) - boost::math::constants::pi<double>() / 2.0;
-    value[2] = boost::math::constants::pi<double>() * (-2.0 * uniDist_(generator_) + 1.0);
+    value[0] = ompl::pi() * (-2.0 * uniDist_(generator_) + 1.0);
+    value[1] = acos(1.0 - 2.0 * uniDist_(generator_)) - ompl::pi() / 2.0;
+    value[2] = ompl::pi() * (-2.0 * uniDist_(generator_) + 1.0);
 }
 
 void ompl::RNG::uniformNormalVector(std::vector<double> &v)
